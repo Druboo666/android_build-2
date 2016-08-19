@@ -28,6 +28,9 @@ CLANG_CONFIG_EXTRA_LDFLAGS :=
 CLANG_CONFIG_EXTRA_CFLAGS += \
   -D__compiler_offsetof=__builtin_offsetof
 
+CLANG_CONFIG_EXTRA_LDFLAGS += \
+  -Wl,--sort-common
+
 # Help catch common 32/64-bit errors.
 CLANG_CONFIG_EXTRA_CFLAGS += \
   -Werror=int-conversion
@@ -50,14 +53,48 @@ CLANG_CONFIG_EXTRA_CFLAGS += \
 # Disable -Winconsistent-missing-override until we can clean up the existing
 # codebase for it.
 CLANG_CONFIG_EXTRA_CPPFLAGS += \
+  -O3 \
+  -Qunused-arguments \
+  -Wno-unknown-warning-option \
   -Wno-inconsistent-missing-override
 
 # Force clang to always output color diagnostics.  Ninja will strip the ANSI
 # color codes if it is not running in a terminal.
 CLANG_CONFIG_EXTRA_CFLAGS += \
+  -O3 \
+  -Qunused-arguments \
+  -Wno-unknown-warning-option \
   -fcolor-diagnostics
 
 CLANG_CONFIG_UNKNOWN_CFLAGS := \
+  -fivopts \
+  -ftracer \
+  -mvectorize-with-neon-double \
+  -mvectorize-with-neon-quad \
+  -fgcse-after-reload \
+  -fgcse-las \
+  -fgcse-sm \
+  -fgraphite \
+  -fgraphite-identity \
+  -fipa-pta \
+  -floop-block \
+  -floop-interchange \
+  -floop-nest-optimize \
+  -floop-parallelize-all \
+  -ftree-parallelize-loops=2 \
+  -ftree-parallelize-loops=4 \
+  -ftree-parallelize-loops=8 \
+  -ftree-parallelize-loops=16 \
+  -floop-strip-mine \
+  -fmodulo-sched \
+  -fmodulo-sched-allow-regmoves \
+  -frerun-cse-after-loop \
+  -frename-registers \
+  -fsection-anchors \
+  -ftree-loop-im \
+  -ftree-loop-ivcanon \
+  -funsafe-loop-optimizations \
+  -fweb \
   -finline-functions \
   -finline-limit=64 \
   -fno-canonical-system-headers \

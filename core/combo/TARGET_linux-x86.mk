@@ -23,10 +23,10 @@ TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT := x86
 endif
 
 # Decouple NDK library selection with platform compiler version
-$(combo_2nd_arch_prefix)TARGET_NDK_GCC_VERSION := 4.9
+$(combo_2nd_arch_prefix)TARGET_NDK_GCC_VERSION := Flare-4.9
 
 ifeq ($(strip $(TARGET_GCC_VERSION_EXP)),)
-$(combo_2nd_arch_prefix)TARGET_GCC_VERSION := 4.9
+$(combo_2nd_arch_prefix)TARGET_GCC_VERSION := Flare-4.9
 else
 $(combo_2nd_arch_prefix)TARGET_GCC_VERSION := $(TARGET_GCC_VERSION_EXP)
 endif
@@ -78,11 +78,13 @@ KERNEL_HEADERS := $(KERNEL_HEADERS_COMMON) $(KERNEL_HEADERS_ARCH)
 android_config_h := $(call select-android-config-h,target_linux-x86)
 
 $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += \
-			-O2 \
+			-O3 \
 			-Wa,--noexecstack \
 			-Werror=format-security \
 			-D_FORTIFY_SOURCE=2 \
 			-Wstrict-aliasing=2 \
+			-fgraphite \
+			-fgraphite-identity \
 			-ffunction-sections \
 			-finline-functions \
 			-finline-limit=300 \
